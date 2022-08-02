@@ -17,6 +17,7 @@ servers:
 tags:
 - name: "Students"
 - name: "Courses"
+- name: "Group"
 paths:
   /Students:
     post:
@@ -245,7 +246,59 @@ paths:
                 $ref: '#/components/schemas/Course'
         400:
           description: Bad Request
-          content: {}                   
+          content: {}           
+
+  /Group:                
+    get:
+      tags:
+      - Group
+      summary: "Get a list of Group"
+      parameters:
+      - name: page
+        in: query
+        description: page
+        required: false
+        schema:
+          type: integer
+          format: $int32
+      - name: page_size
+        in: query
+        description: page_size
+        required: false
+        schema:
+          type: integer
+          format: $int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: error
+  /Group/{id}:
+    get:
+      tags:
+        - Group
+      summary: Get the specified Group
+      operationId: getStudent
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        400:
+          description: Bad Request
+          content: {}
 
 components:
   schemas:
@@ -283,4 +336,9 @@ components:
           type: string
           format: date
           example: "2022-01-01"      
+    Group:
+      type: object
+      properties:
+        name:
+          type: string     
                     
